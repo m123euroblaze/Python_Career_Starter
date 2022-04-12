@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<odoo>
+    <record id="view_students_course_tree" model="ir.ui.view">
+        <field name="name">students.course.tree</field>
+        <field name="model">students.course</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="surname"/>
+                <field name="email"/>
+                <field name="enrolled_year"/>
+                <field name="birth_date"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="view_students_course_form" model="ir.ui.view">
+        <field name="name">students.course.form</field>
+        <field name="model">students.course</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="surname"/>
+                            <field name="email"/>
+                        </group>
+                        <group>
+                            <field name="enrolled_year"/>
+                            <field name="birth_date"/>
+                        </group>
+
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <!--    <record id="efaktur_tree_view" model="ir.ui.view">-->
+    <!--            <field name="name">l10n_id_efaktur.efaktur.range.tree.view</field>-->
+    <!--            <field name="model">l10n_id_efaktur.efaktur.range</field>-->
+    <!--            <field name="arch" type="xml">-->
+    <!--                <tree string="Efaktur Number" editable="bottom">-->
+    <!--                    <field name="min"/>-->
+    <!--                    <field name="max"/>-->
+    <!--                    <field name="available" sum="Total Available"/>-->
+    <!--                    <field name="company_id" groups="base.group_multi_company"/>-->
+    <!--                </tree>-->
+    <!--            </field>-->
+    <!--        </record>-->
+
+
+    <record id="action_students" model="ir.actions.act_window">
+        <field name="name">Students</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">students.course</field>
+        <field name="view_mode">list,form,tree</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your student!
+            </p>
+        </field>
+
+    </record>
+
+
+</odoo>
