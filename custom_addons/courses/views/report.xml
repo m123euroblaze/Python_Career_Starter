@@ -1,0 +1,44 @@
+<odoo>
+
+    <record id="report_courses" model="ir.actions.report">
+         <field name="name">Report</field>
+         <field name="model">courses.course</field>
+         <field name="report_type">qweb-pdf</field>
+         <field name="report_name">courses.courses_report</field>
+         <field name="report_file">courses.courses_report</field>
+         <field name="binding_model_id" ref="model_courses_course"/>
+         <field name="binding_type">report</field>
+    </record>
+
+
+    <template id="courses_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class=".container">
+                    <center>
+                        <h1>Course Report</h1>
+                    </center>
+                    <label for="o.teacher">Teacher: </label>
+                    <span t-field="o.teacher" string="Teacher: ">Teacher:</span><br/>
+                    <span t-field="o.course_name">Course Name:</span><br/>
+                    <span t-field="o.field_of_study">Field of Study: </span><br/>
+                    <span t-field="o.semestar">Semestar: </span><br/>
+                    <span t-field="o.description">Description: </span><br/>
+                    <span t-field="o.beginning_date">Beginning Date: </span><br/>
+                    <span t-field="o.end_date">End Date: </span><br/>
+                    <span t-field="o.students">End Date: </span><br/>
+                    <span t-field="o.attachment">Attachment: </span><br/>
+                    <table>
+                        <tr>
+                            <td>
+                                <span t-field="o.grades">Grades: </span><br/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+
+</odoo>

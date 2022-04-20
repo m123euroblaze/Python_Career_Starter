@@ -1,0 +1,36 @@
+<odoo>
+
+
+     <record id="view_grades_course_form" model="ir.ui.view">
+        <field name="name">grades.course.form</field>
+        <field name="model">grades.course</field>
+        <field name="arch" type="xml">
+            <form string="Insert new Grade">
+                <group>
+                    <field name="students"/>
+                    <field name="course_name"/>
+                    <field name="grades" widget="selection"/>
+                </group>
+                <footer>
+                    <button name="action_insert_grades" type="object" string="Confirm" class="btn-primary"></button>
+                    <button string="Cancel" class="btn-secondary" special="cancel"></button>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_grades_course" model="ir.actions.act_window">
+        <field name="name">Insert Grades</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">grades.course</field>
+        <field name="view_mode">form</field>
+<!--        <field name="view_id" ref="view_grades_course_form"/>-->
+        <field name="target">new</field>
+    </record>
+
+
+
+
+
+
+</odoo>

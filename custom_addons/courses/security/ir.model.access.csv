@@ -1,2 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_custom/test_module_custom/test_module,custom/test_module.custom/test_module,model_custom/test_module_custom/test_module,base.group_user,1,1,1,1
+access_courses_course,access.courses.course,model_courses_course,,1,1,1,1
+access_students_course,access.students.course,model_students_course,,1,1,1,1
+access_teachers_course,access.teachers.course,model_teachers_course,,1,1,1,1
+access_grades_course,access.grades.course,model_grades_course,,1,1,1,1

@@ -2,6 +2,8 @@
 
 <odoo>
 
+
+
     <record id="view_courses_course_kanban" model="ir.ui.view">
         <field name="name">courses.course.kanban</field>
         <field name="model">courses.course</field>
@@ -57,22 +59,31 @@
         <field name="model">courses.course</field>
         <field name="arch" type="xml">
             <form>
+            <header>
+                <button name="action_draft" invisible="0" type="object" string="Draft" state="draft"/>
+                <button name="action_open" type="object" invisible="0" string="Open" state="open" class="oe_highlight"/>
+                <button name="action_finished" type="object" string="Finished" state="finished" class="oe_highlight"/>
+                <button name="action_insert_grades" type="object" string="Insert Grades" state="open" class="oe_highlight"/>
+                <button name="copy" string="Copy" type="object">Copy</button>
+                <button name="print_report" type="object" string="Print" class="oe_highlight"/>
+                <field name="state" widget="statusbar" statusbar_visible="draft,open,finished"/>
+            </header>
                 <sheet>
                     <group>
                         <group>
-                            <field name="teacher"/>
-                            <field name="course_name"/>
-                            <field name="field_of_study"/>
-                            <field name="semestar"/>
-                            <field name="state"/>
-                            <field name="description"/>
+                            <field name="teacher" attrs="{'readonly':[('state','in',('open','finished'))]}"/>
+                            <field name="course_name" attrs="{'readonly':[('state','in',('open','finished'))]}"/>
+                            <field name="field_of_study" attrs="{'readonly':[('state','in',('open','finished'))]}"/>
+                            <field name="semestar" attrs="{'readonly':[('state','in',('open','finished'))]}"/>
+<!--                            <field name="state"/>-->
+                            <field name="description" attrs="{'readonly':[('state','in',('open','finished'))]}"/>
 
                         </group>
                         <group>
-                            <field name="beginning_date"/>
-                            <field name="end_date"/>
-                            <field name="attachment"/>
-                            <field name="students" widget="many2many_tags"/>
+                            <field name="beginning_date" attrs="{'readonly':[('state','in',('open','finished'))]}"/>
+                            <field name="end_date" attrs="{'readonly':[('state','in',('open','finished'))]}"/>
+                            <field name="attachment" widget="many2many_binary" attrs="{'readonly':[('state','in',('open','finished'))]}"/>
+                            <field name="students" widget="many2many_tags" attrs="{'readonly':[('state','in',('open','finished'))]}"/>
                         </group>
 
                     </group>
@@ -90,7 +101,7 @@
         <field name="context">{}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
-                Create your course!
+                Create your course!!
             </p>
         </field>
 
