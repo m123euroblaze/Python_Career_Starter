@@ -1,0 +1,10 @@
+<odoo>
+    <data>
+
+        <record id="index_sequence_number" model="ir.sequence">
+            <field name="name">Index Sequence Number</field>
+            <field name="code">index.number</field>
+        </record>
+
+    </data>
+</odoo>

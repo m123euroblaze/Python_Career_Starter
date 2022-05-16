@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <data>
+        <template id="list_courses" name="List Courses" >
+            <t t-call="website.layout">
+                <div class="container mt32" >
+                    <h1 class="text-black">Available Courses</h1>
+                </div>
+                <div class="container mt32" >
+                    <div class="table-responsive"></div>
+                    <table class="table table-bordered table-hover text-center">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Courses</th>
+                                <th>Number of Students</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                                <t t-set="course_index" t-value="1"/>
+                                <t t-foreach="courses" t-as="course">
+                                    <t t-set="course_index" t-value="course_index + 1"/>
+                                    <tr>
+                                        <th>
+                                            <t t-esc="course_index"/>
+                                        </th>
+                                        <th>
+                                            <a t-attf-href="/courses/#{course.id}"><t t-esc="course.name"/></a>
+                                        </th>
+                                        <th>
+                                            <t t-esc="course.number_students_in_course"/>
+                                        </th>
+
+                                    </tr>
+                                </t>
+                        </tbody>
+                    </table>
+                </div>
+    <!--            <div id="wrap" class="oe_structure oe_empty"/>-->
+            </t>
+        </template>
+    </data>
+
+</odoo>
+
+

@@ -10,19 +10,19 @@
               name = "Courses"
               action="action_courses"
               parent="menu"
-              sequence="0"/>
+              sequence="1"/>
 
     <menuitem id="menu_teachers"
               name = "Teachers"
               action="action_teachers"
               parent="menu"
-              sequence="0"/>
+              sequence="2"/>
 
     <menuitem id="menu_students"
               name="Students"
               action="action_students"
               parent="menu"
-              sequence="0"/>
+              sequence="3"/>
 
 
 </odoo>

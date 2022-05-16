@@ -7,7 +7,7 @@ class Courses(models.Model):
     _description = "Courses course"
 
     teacher = fields.Many2one('teachers.course', string='Teacher')
-    course_name = fields.Char(string='Course Name')
+    name = fields.Char(string='Course Name')
     field_of_study = fields.Char(string='Field of Study')
     semestar = fields.Selection([
         ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5'),
@@ -29,10 +29,12 @@ class Courses(models.Model):
     # attachment = fields.Binary(string="Attachment Button")
     students = fields.Many2many('students.course', string='Students that enrolled this course')
     attachment = fields.Many2many('ir.attachment', string="Attachment Button")
+    student_grades = fields.One2many('grades.course', 'course_id', string='Grades')
     grades = fields.Selection(selection=[
         ('5', '5'), ('6', '6'), ('7', '7'), ('8', '8'), ('9', '9'), ('10', '10')
-    ], required=True,
-        )
+    ], required=False,
+    )
+    number_students_in_course = fields.Integer(string="Number of Students", readonly=True, compute='number_of_students')
 
     # @api.model
     # def create(self, vals):
@@ -42,6 +44,11 @@ class Courses(models.Model):
     #     record.env["courses.course"].create(product_data)
     #
     #     return record
+
+    @api.onchange('students')
+    def number_of_students(self):
+        for record in self:
+            record.number_students_in_course = len(record.students)
 
     def action_draft(self):
         for record in self:
@@ -63,6 +70,42 @@ class Courses(models.Model):
         for rec in self:
             rec.state = 'finished'
 
+    def copy_course(self):
+        for record in self:
+            default = {
+                'students': None,
+                'student_grades': None,
+                'state': 'draft'
+            }
+            copy = super(Courses, record).copy(default)
+            view_id = record.env.ref('courses.view_courses_course_form').id
+
+            return {
+                'name': copy.name,
+                'view_type': 'form',
+                'view_mode': 'form',
+                'res_model': 'courses.course',
+                'view_id': view_id,
+                'type': 'ir.actions.act_window',
+                'res_id': copy.id,
+                'target': 'current'
+            }
+
+    @api.constrains('students')
+    def students_create_grade(self):
+        for record in self:
+            grades = record.student_grades
+            for students in record.students:
+                grades_exist = grades.filtered(lambda l: l.students.id == students.id)
+                if not grades_exist:
+                    self.env['grades.course'].create({
+                        'course_id': record.id,
+                        'students': students.id,
+                        'grades': False
+                    })
+            grades = grades.filtered(lambda l: l.students.id not in record.students.ids)
+            grades.unlink()
+
     def action_insert_grades(self):
         for record in self:
             form_name = ""
@@ -72,8 +115,7 @@ class Courses(models.Model):
             elif record.state == "finished":
                 form_name = "View Grades"
 
-            view_id = record.env.ref('courses.view_grades_course_form').id
-            context = record._context.copy()
+            view_id = record.env.ref('courses.view_grades_form').id
 
             return {
                 'name': form_name,
@@ -85,11 +127,11 @@ class Courses(models.Model):
                 'type': 'ir.actions.act_window',
                 'res_id': record.id,
                 'target': 'new',
-                'context': context,
             }
-
-    def copy(self, default=None):
-        return super(Courses, self).copy(default)
 
     def print_report(self):
         return self.env.ref('courses.report_courses').report_action(self)
+
+    def confirm(self):
+        for record in self:
+            print("Confirm")

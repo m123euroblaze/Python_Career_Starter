@@ -1,0 +1,120 @@
+<odoo>
+    <data>
+
+        <template id="view_course" name="Course">
+            <t t-call="website.layout">
+                <div class="container">
+                    <div class="mt64 mb64">
+                        <p>
+                            <h3 t-esc="courses.name" class="font-weight-bold font-italic"/>
+                        </p>
+                        <p>
+                            <span>Teacher:</span>
+                            <span t-esc="courses.teacher.name"/>
+                        </p>
+                        <p>
+                            <span t-esc="courses.semestar"/>
+                        </p>
+                        <p>
+                            <span>Description:</span>
+                            <span t-esc="courses.description"/>
+                        </p>
+                        <p>
+                            <span>Start Date:</span>
+                            <span t-esc="courses.beginning_date"/>
+                        </p>
+                        <p>
+                            <span>End Date:</span>
+                            <span t-esc="courses.end_date"/>
+                        </p>
+                        <p>
+                            <span>Field of Study:</span>
+                            <span t-esc="courses.field_of_study"/>
+                        </p>
+                    </div>
+                    <div class="mb64">
+
+                        <div t-if="courses.attachment" class="mb64">
+                            <div>
+                                <h2>Course Material</h2>
+                            </div>
+                            <br/>
+                            <div>
+                                <div class="o_portal_chatter_attachments">
+                                    <div class="row">
+                                        <div t-foreach="courses.attachment" t-as="attachment"
+                                             class="col-lg-2 col-md-3 col-sm-6">
+                                            <div class="o_portal_chatter_attachment mb-2 position-relative text-center"
+                                                 t-att-data-id="attachment.id">
+                                                <button t-if="showDelete and attachment.state == 'pending'"
+                                                        class="o_portal_chatter_attachment_delete btn btn-sm btn-outline-danger"
+                                                        title="Delete">
+                                                    <i class="fa fa-times"/>
+                                                </button>
+                                                <a t-attf-href="/web/content/#{attachment.id}?download=true&amp;access_token=#{attachment.generate_access_token()[0]}"
+                                                   target="_blank">
+                                                    <div class='oe_attachment_embedded o_image'
+                                                         t-att-title="attachment.name"
+                                                         t-att-data-mimetype="attachment.mimetype"/>
+                                                    <div class='o_portal_chatter_attachment_name'>
+                                                        <t t-esc='attachment.name'/>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="mb64">
+                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#exampleModalCenter">
+                            View Grades
+                        </button>
+                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Student Grades</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-hover text-center">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Student Name</th>
+                                                        <th>Student Grades</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <t t-foreach="courses.student_grades" t-as="grade">
+                                                        <tr>
+                                                            <th>
+                                                                <t t-esc="grade.students.name"/>
+                                                            </th>
+                                                            <th>
+                                                                <t t-esc="grade.grades or 'No Grade'"/>
+                                                            </th>
+                                                        </tr>
+                                                    </t>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+    </data>
+</odoo>

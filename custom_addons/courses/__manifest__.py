@@ -20,7 +20,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base', 'website', 'contacts', 'web'],
 
 
     # always loaded
@@ -28,11 +28,14 @@
         'security/ir.model.access.csv',
         'data/index.xml',
         'views/students.xml',
+        'views/list_courses.xml',
         'views/courses.xml',
         'views/teachers.xml',
+        'views/view_course.xml',
         'views/menu.xml',
         'views/wizard_grade.xml',
-        'views/report.xml'
+        'views/report.xml',
+        'views/index_sequence.xml'
     ],
     # only loaded in demonstration mode
     'demo': [
